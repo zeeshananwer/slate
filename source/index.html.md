@@ -6,6 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - ruby
   - python
   - javascript
+  - csharp
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -19,223 +20,356 @@ search: true
 code_clipboard: true
 ---
 
-# Introduction
+# Introduction 
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+**Version:** v1.0 
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+# /API/V{VERSION}/APPOINTMENT/TOKEN
+## ***POST*** 
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+### HTTP Request 
+`***POST*** /api/v{version}/appointment/token` 
 
-# Authentication
+**Parameters**
 
-> To authorize, use this code:
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| version | path |  | Yes |  |
 
-```ruby
-require 'kittn'
+**Responses**
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
 
-```python
-import kittn
+# /API/V{VERSION}/APPOINTMENT/QUICK
+## ***POST*** 
 
-api = kittn.authorize('meowmeowmeow')
-```
+### HTTP Request 
+`***POST*** /api/v{version}/appointment/quick` 
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
-```
+**Parameters**
 
-```javascript
-const kittn = require('kittn');
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| smsToPatient | query |  | No |  |
+| emailToPatient | query |  | No |  |
+| smsToSpecialist | query |  | No |  |
+| version | path |  | Yes |  |
 
-let api = kittn.authorize('meowmeowmeow');
-```
+**Responses**
 
-> Make sure to replace `meowmeowmeow` with your API key.
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+# /API/V{VERSION}/APPOINTMENT
+## ***POST*** 
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+### HTTP Request 
+`***POST*** /api/v{version}/appointment` 
 
-`Authorization: meowmeowmeow`
+**Parameters**
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| smsToPatient | query |  | No |  |
+| emailToPatient | query |  | No |  |
+| smsToSpecialist | query |  | No |  |
+| version | path |  | Yes |  |
 
-# Kittens
+**Responses**
 
-## Get All Kittens
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 409 | Conflict |
 
-```ruby
-require 'kittn'
+## ***GET*** 
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
+### HTTP Request 
+`***GET*** /api/v{version}/appointment` 
 
-```python
-import kittn
+**Parameters**
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| Page | query |  | No |  |
+| Size | query |  | No |  |
+| From | query |  | No |  |
+| To | query |  | No |  |
+| Filter | query |  | No |  |
+| FacilityId | query |  | No |  |
+| ProviderId | query |  | No |  |
+| State | query |  | No |  |
+| version | path |  | Yes |  |
 
-```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
-```
+**Responses**
 
-```javascript
-const kittn = require('kittn');
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 401 | Unauthorized |
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
+# /API/V{VERSION}/APPOINTMENT/{APPOINTMENTID}
+## ***PUT*** 
 
-> The above command returns JSON structured like this:
+### HTTP Request 
+`***PUT*** /api/v{version}/appointment/{appointmentId}` 
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
+**Parameters**
 
-This endpoint retrieves all kittens.
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| appointmentId | path |  | Yes |  |
+| smsToPatient | query |  | No |  |
+| emailToPatient | query |  | No |  |
+| smsToSpecialist | query |  | No |  |
+| version | path |  | Yes |  |
 
-### HTTP Request
+**Responses**
 
-`GET http://example.com/api/kittens`
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
 
-### Query Parameters
+## ***DELETE*** 
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+### HTTP Request 
+`***DELETE*** /api/v{version}/appointment/{appointmentId}` 
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
+**Parameters**
 
-## Get a Specific Kitten
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| appointmentId | path |  | Yes |  |
+| smsToSpecialist | query |  | No |  |
+| emailToSpecialist | query |  | No |  |
+| version | path |  | Yes |  |
+
+**Responses**
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+
+# /API/V{VERSION}/APPOINTMENT/{APPOINTMENTID}/STATE
+## ***GET*** 
+
+### HTTP Request 
+`***GET*** /api/v{version}/appointment/{appointmentId}/state` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| appointmentId | path |  | Yes |  |
+| version | path |  | Yes |  |
+
+**Responses**
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+
+# /API/V{VERSION}/APPOINTMENT/TODAY
+## ***GET*** 
+
+### HTTP Request 
+`***GET*** /api/v{version}/appointment/today` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| Page | query |  | No |  |
+| Size | query |  | No |  |
+| version | path |  | Yes |  |
+
+**Responses**
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 401 | Unauthorized |
+
+# /API/V{VERSION}/APPOINTMENT/HISTORY/{YEAR}
+## ***GET*** 
+
+### HTTP Request 
+`***GET*** /api/v{version}/appointment/history/{year}` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| Page | query |  | No |  |
+| Size | query |  | No |  |
+| Year | path |  | Yes |  |
+| Month | path |  | Yes |  |
+| Day | path |  | Yes |  |
+| Filter | query |  | No |  |
+| FacilityId | query |  | No |  |
+| ProviderId | query |  | No |  |
+| State | query |  | No |  |
+| version | path |  | Yes |  |
+
+**Responses**
 
-```ruby
-require 'kittn'
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+
+# /API/V{VERSION}/APPOINTMENT/HISTORY/{YEAR}/{MONTH}
+## ***GET*** 
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
+### HTTP Request 
+`***GET*** /api/v{version}/appointment/history/{year}/{month}` 
 
-```python
-import kittn
+**Parameters**
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| Page | query |  | No |  |
+| Size | query |  | No |  |
+| Year | path |  | Yes |  |
+| Month | path |  | Yes |  |
+| Day | path |  | Yes |  |
+| Filter | query |  | No |  |
+| FacilityId | query |  | No |  |
+| ProviderId | query |  | No |  |
+| State | query |  | No |  |
+| version | path |  | Yes |  |
 
-```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
-```
+**Responses**
 
-```javascript
-const kittn = require('kittn');
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
+# /API/V{VERSION}/APPOINTMENT/HISTORY/{YEAR}/{MONTH}/{DAY}
+## ***GET*** 
 
-> The above command returns JSON structured like this:
+### HTTP Request 
+`***GET*** /api/v{version}/appointment/history/{year}/{month}/{day}` 
 
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
+**Parameters**
 
-This endpoint retrieves a specific kitten.
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| Page | query |  | No |  |
+| Size | query |  | No |  |
+| Year | path |  | Yes |  |
+| Month | path |  | Yes |  |
+| Day | path |  | Yes |  |
+| Filter | query |  | No |  |
+| FacilityId | query |  | No |  |
+| ProviderId | query |  | No |  |
+| State | query |  | No |  |
+| version | path |  | Yes |  |
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+**Responses**
 
-### HTTP Request
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
 
-`GET http://example.com/kittens/<ID>`
+# /API/V{VERSION}/ENDPOINT/TOKEN
+## ***POST*** 
 
-### URL Parameters
+### HTTP Request 
+`***POST*** /api/v{version}/endpoint/token` 
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+**Parameters**
 
-## Delete a Specific Kitten
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| version | path |  | Yes |  |
 
-```ruby
-require 'kittn'
+**Responses**
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
 
-```python
-import kittn
+# /API/V{VERSION}/ENDPOINT/LOCATION/{LOCATION}
+## ***GET*** 
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+### HTTP Request 
+`***GET*** /api/v{version}/endpoint/location/{location}` 
 
-```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
-```
+**Parameters**
 
-```javascript
-const kittn = require('kittn');
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| location | path |  | Yes |  |
+| version | path |  | Yes |  |
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
+**Responses**
 
-> The above command returns JSON structured like this:
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
 
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
+# /API/V{VERSION}/FACILITY
+## ***GET*** 
 
-This endpoint deletes a specific kitten.
+### HTTP Request 
+`***GET*** /api/v{version}/facility` 
 
-### HTTP Request
+**Parameters**
 
-`DELETE http://example.com/kittens/<ID>`
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| version | path |  | Yes |  |
 
-### URL Parameters
+**Responses**
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 401 | Unauthorized |
 
+# /API/V{VERSION}/USER/DEACTIVATE
+## ***POST*** 
+
+### HTTP Request 
+`***POST*** /api/v{version}/user/deactivate` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| version | path |  | Yes |  |
+
+**Responses**
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+
+<!-- Converted with the swagger-to-slate https://github.com/lavkumarv/swagger-to-slate -->
